@@ -38,6 +38,10 @@ dependencies {
     implementation("printscript:parser:1.1.3")
     implementation("printscript:lexer:1.1.3")
     implementation("printscript:common:1.1.3")
+    implementation("printscript:formatter:1.1.0-SNAPSHOT")
+    implementation("printscript:linter:1.1.0-SNAPSHOT")
+    implementation("org.postgresql:postgresql:42.7.2")
+    implementation("org.springframework.boot:spring-boot-starter-validation:3.3.0")
 }
 
 tasks.withType<KotlinCompile> {
