@@ -4,7 +4,7 @@ WORKDIR /home/gradle/src
 RUN gradle assemble
 
 FROM openjdk:21-jdk-slim
-EXPOSE 8080
+EXPOSE 8082
 RUN mkdir /app
 COPY --from=build /home/gradle/src/build/libs/*.jar /app/spring-boot-application.jar
 ENTRYPOINT ["java", "-jar", "/app/spring-boot-application.jar"]
