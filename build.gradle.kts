@@ -17,6 +17,15 @@ java {
 
 repositories {
     mavenCentral()
+    mavenLocal()
+    maven {
+        name = "GitHubPackages"
+        url = uri("https://maven.pkg.github.com/printscript-ingsis/printscript")
+        credentials {
+            username = (project.findProperty("gpr.user") ?: System.getenv("USERNAME")).toString()
+            password = (project.findProperty("gpr.key") ?: System.getenv("TOKEN")).toString()
+        }
+    }
 }
 
 dependencies {
@@ -25,6 +34,10 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    implementation("printscript:lexer:1.1.3")
+    implementation("printscript:parser:1.1.3")
+    implementation("printscript:lexer:1.1.3")
+    implementation("printscript:common:1.1.3")
 }
 
 tasks.withType<KotlinCompile> {
