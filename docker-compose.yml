@@ -1,0 +1,10 @@
+version: '3.5'
+
+services:
+  api:
+    container_name: 'snippet-runner-app'
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '8080:8080'
