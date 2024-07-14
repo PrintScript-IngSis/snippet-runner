@@ -15,14 +15,14 @@ import org.example.interpreter.InterpreterImpl
 @Service
 class RunService {
     fun interpretCode(input: InterpreterInput): InterpreterOutput {
-        val lexer = LexerDirector().createLexer(input.version);
-        val interpreter = InterpreterImpl();
-        val reader = BufferedReader(InputStreamReader(input.code));
+        val lexer = LexerDirector().createLexer(input.version)
+        val interpreter = InterpreterImpl()
+        val reader = BufferedReader(InputStreamReader(input.code))
 
     }
 
     private fun InputStreamReader(code: String): InputStreamReader {
-        return InputStreamReader(code.byteInputStream());
+        return InputStreamReader(code.byteInputStream())
     }
 
     fun lintCode(input: LinterInput): LinterOutput {
