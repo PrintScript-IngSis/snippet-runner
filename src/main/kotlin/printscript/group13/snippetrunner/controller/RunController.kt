@@ -1,8 +1,8 @@
-package printscript.group13.snippetrunner.controller;
+package printscript.group13.snippetrunner.controller
 
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMapping
 import jakarta.validation.Valid
 import org.springframework.stereotype.Controller
 import printscript.group13.snippetrunner.input.FormatterInput
@@ -14,13 +14,12 @@ import printscript.group13.snippetrunner.output.LinterOutput
 import printscript.group13.snippetrunner.service.RunService
 
 @Controller
-public class RunController {
+class RunController {
     @RequestMapping("/run")
     class RunController(private val runService: RunService) {
         @PostMapping("/interpret")
         fun interpretCode(@Valid @RequestBody input: InterpreterInput): InterpreterOutput {
             return runService.interpretCode(input)
-
         }
         @PostMapping("/lint")
         fun lintCode(@RequestBody input: LinterInput): LinterOutput {
