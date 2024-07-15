@@ -22,13 +22,13 @@ class RunController(private val runService: RunService) {
         return runService.interpretCode(input)
     }
 
-//  @PostMapping("/lint")
-//  fun lintCode(@RequestBody input: LinterInput): LinterOutput {
-//        return runService.lintCode(input)
-//   }
+  @PostMapping("/lint")
+  fun lintCode(@RequestBody input: LinterInput): LinterOutput {
+        return runService.lintCode(input)
+   }
 
-//   @PostMapping("/format")
-//   fun formatCode(@RequestBody input: FormatterInput): FormatterOutput {
-//        return runService.formatCode(input)
-//    }
+   @PostMapping("/format")
+   fun formatCode(@RequestBody input: FormatterInput): FormatterOutput {
+        return runService.formatCode(input)
+    }
 }

@@ -1,6 +1,7 @@
 package printscript.group13.snippetrunner.service
 
 import lexer.director.LexerDirector
+import linter.LinterImpl
 import org.springframework.stereotype.Service
 import printscript.group13.snippetrunner.input.FormatterInput
 import printscript.group13.snippetrunner.input.InterpreterInput
@@ -8,12 +9,10 @@ import printscript.group13.snippetrunner.input.LinterInput
 import printscript.group13.snippetrunner.output.FormatterOutput
 import printscript.group13.snippetrunner.output.InterpreterOutput
 import printscript.group13.snippetrunner.output.LinterOutput
-import java.io.BufferedReader
-import java.io.InputStreamReader
 import org.example.interpreter.InterpreterImpl
 import org.example.token.Token
 import org.example.ast.nodes.ProgramNode
-import org.example.interpreter.Interpreter
+import org.example.formatter.FormatterImpl
 import org.example.parser.ParserImpl
 import java.io.ByteArrayOutputStream
 import java.io.PrintStream
@@ -80,14 +79,30 @@ class RunService {
         }
         return resultList
     }
+
+    fun lintCode(input: LinterInput): LinterOutput {
+        try {
+            val lexer = LexerDirector().createLexer(input.version)
+            val tokens: List<Token> = lexer.tokenize(input.code)
+            val ast: ProgramNode = ParserImpl().parse(tokens)
+            val linter = LinterImpl()
+            val output = linter.checkErrors(ast, input.rules)
+            return LinterOutput(output.toString(), "Linting errors")
+        } catch (e: Throwable) {
+            return LinterOutput("", e.message ?: "An error occurred")
+        }
+    }
+
+    fun formatCode(input: FormatterInput): FormatterOutput {
+        try {
+            val lexer = LexerDirector().createLexer(input.version)
+            val tokens: List<Token> = lexer.tokenize(input.code)
+            val ast: ProgramNode = ParserImpl().parse(tokens)
+            val formatter = FormatterImpl()
+            val output = formatter.format(ast,input.rules)
+            return FormatterOutput(output, "Compiled correctly")
+        } catch (e: Throwable) {
+            return FormatterOutput("", e.message ?: "An error occurred")
+        }
+    }
 }
-
-
-
-//    fun lintCode(input: LinterInput): LinterOutput {
-//        return RunResult("linting code: $code")
-//    }
-//
-//    fun formatCode(input: FormatterInput): FormatterOutput {
-//        return RunResult("Formatting code: $code")
-//    }
