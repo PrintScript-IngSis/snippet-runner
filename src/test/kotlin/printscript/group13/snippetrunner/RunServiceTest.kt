@@ -1,7 +1,6 @@
 package printscript.group13.snippetrunner
 
 import org.junit.jupiter.api.Test
-import org.springframework.test.util.AssertionErrors.assertEquals
 import printscript.group13.snippetrunner.input.FormatterInput
 import printscript.group13.snippetrunner.input.InterpreterInput
 import printscript.group13.snippetrunner.input.LinterInput
