@@ -37,7 +37,7 @@ class RunService {
                 output.addAll(checkInput(ast, baos))
                 index++
             }
-            return InterpreterOutput(output, "Compiled correctly")
+            return InterpreterOutput(output, "Interpreted correctly")
         } catch (e: Throwable) {
             return InterpreterOutput(mutableListOf(), e.message ?: "An error occurred")
         }
@@ -86,8 +86,12 @@ class RunService {
             val tokens: List<Token> = lexer.tokenize(input.code)
             val ast: ProgramNode = ParserImpl().parse(tokens)
             val linter = LinterImpl()
-            val output = linter.checkErrors(ast, input.rules)
-            return LinterOutput(output.toString(), "Linting errors")
+            val errors = linter.checkErrors(ast, input.rules)
+            val output = StringBuilder()
+            for (error in errors) {
+                output.append(error.toString())
+            }
+            return LinterOutput(output.toString(), "Linted correctly")
         } catch (e: Throwable) {
             return LinterOutput("", e.message ?: "An error occurred")
         }
@@ -100,7 +104,7 @@ class RunService {
             val ast: ProgramNode = ParserImpl().parse(tokens)
             val formatter = FormatterImpl()
             val output = formatter.format(ast,input.rules)
-            return FormatterOutput(output, "Compiled correctly")
+            return FormatterOutput(output.trim(), "Formatted correctly")
         } catch (e: Throwable) {
             return FormatterOutput("", e.message ?: "An error occurred")
         }
