@@ -1,6 +1,6 @@
 package printscript.group13.snippetrunner.output
 
-data class InterpreterOutput (
+data class InterpreterOutput(
     val interpretedCode: List<String>,
-    val error: String
+    val error: String,
 )

@@ -11,12 +11,16 @@ class RunServiceTest {
 
     @Test
     fun testInterpret() {
-        val input = InterpreterInput("const booleanValue: boolean = false; if(booleanValue) { println('if statement is not working correctly'); } println('outside of conditional');", "1.1")
+        val input =
+            InterpreterInput(
+                "const booleanValue: boolean = false; if(booleanValue) " +
+                    "{ println('if statement is not working correctly'); } println('outside of conditional');",
+                "1.1",
+            )
         val output = runService.interpretCode(input)
         assert(output.error == "Interpreted correctly")
         assert(output.interpretedCode[0] == "outside of conditional")
     }
-
 
     @Test
     fun testLint() {
@@ -27,7 +31,7 @@ class RunServiceTest {
     }
 
     @Test
-    fun testFormat(){
+    fun testFormat()  {
         val input = FormatterInput("println  (4.0) ;", "1.1")
         val output = runService.formatCode(input)
         assert(output.formattedCode == "println(4.0);")
@@ -49,7 +53,7 @@ class RunServiceTest {
     }
 
     @Test
-    fun testFormatError(){
+    fun testFormatError()  {
         val input = FormatterInput("println  (4.0)", "1.1")
         val output = runService.formatCode(input)
         assert(output.error == "Unfinished statement, try checking for () or ;")

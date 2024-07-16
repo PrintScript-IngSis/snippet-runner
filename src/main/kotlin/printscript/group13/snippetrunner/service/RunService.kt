@@ -2,6 +2,11 @@ package printscript.group13.snippetrunner.service
 
 import lexer.director.LexerDirector
 import linter.LinterImpl
+import org.example.ast.nodes.ProgramNode
+import org.example.formatter.FormatterImpl
+import org.example.interpreter.InterpreterImpl
+import org.example.parser.ParserImpl
+import org.example.token.Token
 import org.springframework.stereotype.Service
 import printscript.group13.snippetrunner.input.FormatterInput
 import printscript.group13.snippetrunner.input.InterpreterInput
@@ -9,11 +14,6 @@ import printscript.group13.snippetrunner.input.LinterInput
 import printscript.group13.snippetrunner.output.FormatterOutput
 import printscript.group13.snippetrunner.output.InterpreterOutput
 import printscript.group13.snippetrunner.output.LinterOutput
-import org.example.interpreter.InterpreterImpl
-import org.example.token.Token
-import org.example.ast.nodes.ProgramNode
-import org.example.formatter.FormatterImpl
-import org.example.parser.ParserImpl
 import java.io.ByteArrayOutputStream
 import java.io.PrintStream
 
@@ -43,7 +43,11 @@ class RunService {
         }
     }
 
-    private fun handleIf(line: String, lines: List<String>, startIndex: Int): String {
+    private fun handleIf(
+        line: String,
+        lines: List<String>,
+        startIndex: Int,
+    ): String {
         var lineMutable = line
         var index = startIndex
         while (!lineMutable.contains("}")) {
@@ -65,7 +69,10 @@ class RunService {
         return lineMutable
     }
 
-    private fun checkInput(ast: ProgramNode, baos: ByteArrayOutputStream): MutableList<String> {
+    private fun checkInput(
+        ast: ProgramNode,
+        baos: ByteArrayOutputStream,
+    ): MutableList<String> {
         val ps = PrintStream(baos)
         val oldOut = System.out
         System.setOut(ps)
@@ -103,7 +110,7 @@ class RunService {
             val tokens: List<Token> = lexer.tokenize(input.code)
             val ast: ProgramNode = ParserImpl().parse(tokens)
             val formatter = FormatterImpl()
-            val output = formatter.format(ast,input.rules)
+            val output = formatter.format(ast, input.rules)
             return FormatterOutput(output.trim(), "Formatted correctly")
         } catch (e: Throwable) {
             return FormatterOutput("", e.message ?: "An error occurred")

@@ -4,5 +4,5 @@ data class InterpreterInput(
     val code: String,
     val version: String,
     val inputs: List<String> = emptyList(),
-    val env: Map<String, Any> = emptyMap()
+    val env: Map<String, Any> = emptyMap(),
 )

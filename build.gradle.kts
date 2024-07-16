@@ -5,6 +5,8 @@ plugins {
     id("io.spring.dependency-management") version "1.1.4"
     kotlin("jvm") version "1.9.23"
     kotlin("plugin.spring") version "1.9.23"
+    id("org.jetbrains.kotlinx.kover") version "0.7.6"
+    id("org.jlleitschuh.gradle.ktlint") version "12.1.0"
 }
 
 group = "printscript.group13"
@@ -40,6 +42,7 @@ dependencies {
     implementation("printscript:interpreter:1.1.3")
     implementation("org.postgresql:postgresql:42.7.2")
     implementation("org.springframework.boot:spring-boot-starter-validation:3.3.0")
+    implementation("org.jetbrains.kotlinx:kover-gradle-plugin:0.7.6")
 }
 
 tasks.withType<KotlinCompile> {
@@ -51,4 +54,12 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+koverReport {
+    verify {
+        rule {
+            minBound(80)
+        }
+    }
 }
