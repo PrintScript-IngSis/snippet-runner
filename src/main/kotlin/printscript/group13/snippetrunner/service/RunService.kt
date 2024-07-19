@@ -35,7 +35,7 @@ class RunService {
                 val ast: ProgramNode = ParserImpl().parse(tokens)
                 val baos = ByteArrayOutputStream()
                 if (input.input.isNotEmpty()) {
-                    output.addAll(checkInput(ast, baos,true, input.input))
+                    output.addAll(checkInput(ast, baos, true, input.input))
                 } else {
                     output.addAll(checkInput(ast, baos))
                 }
