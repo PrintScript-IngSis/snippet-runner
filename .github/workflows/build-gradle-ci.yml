@@ -9,6 +9,6 @@ on:
 jobs:
   build:
     uses: PrintScript-IngSis/snippet-actions/.github/workflows/build-gradle-ci.yml@main
-    with:
+    secrets:
       USERNAME: ${{ secrets.PUBLISH_USER }}
       TOKEN: ${{ secrets.PUBLISH_TOKEN }}
