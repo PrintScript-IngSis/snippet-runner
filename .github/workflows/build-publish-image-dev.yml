@@ -66,6 +66,7 @@ jobs:
 
   pull-repo-and-deploy:
     runs-on: ubuntu-latest
+    needs: publish-image
     steps:
       - name: execute ssh commands
         uses: appleboy/ssh-action@v1.0.3
