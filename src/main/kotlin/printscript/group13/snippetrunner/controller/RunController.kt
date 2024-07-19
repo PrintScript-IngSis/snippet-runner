@@ -14,7 +14,7 @@ import printscript.group13.snippetrunner.output.LinterOutput
 import printscript.group13.snippetrunner.service.RunService
 
 @RestController
-@RequestMapping("/run")
+@RequestMapping("/api/run")
 class RunController(private val runService: RunService) {
     @PostMapping("/interpret")
     fun interpretCode(

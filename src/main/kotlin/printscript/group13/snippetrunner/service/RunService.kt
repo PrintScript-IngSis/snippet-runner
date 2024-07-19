@@ -34,7 +34,11 @@ class RunService {
                 val tokens: List<Token> = lexer.tokenize(line)
                 val ast: ProgramNode = ParserImpl().parse(tokens)
                 val baos = ByteArrayOutputStream()
-                output.addAll(checkInput(ast, baos))
+                if (input.input.isNotEmpty()) {
+                    output.addAll(checkInput(ast, baos, true, input.input))
+                } else {
+                    output.addAll(checkInput(ast, baos))
+                }
                 index++
             }
             return InterpreterOutput(output, "Interpreted correctly")
@@ -72,12 +76,14 @@ class RunService {
     private fun checkInput(
         ast: ProgramNode,
         baos: ByteArrayOutputStream,
+        isInput: Boolean = false,
+        inputValue: String = "",
     ): MutableList<String> {
         val ps = PrintStream(baos)
         val oldOut = System.out
         System.setOut(ps)
         val interpreter = InterpreterImpl()
-        interpreter.interpret(ast, false, "")
+        interpreter.interpret(ast, isInput, inputValue)
         System.setOut(oldOut)
         val response = baos.toString().replace("\r", "").trim()
         val resultList = mutableListOf<String>()
