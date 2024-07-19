@@ -63,3 +63,21 @@ jobs:
           build-args: |
             USERNAME=${{ secrets.PUBLISH_USER }}
             TOKEN=${{ secrets.PUBLISH_TOKEN }}
+
+  pull-repo-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: execute ssh commands
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DEV_VM_HOST }}
+          username: ${{ secrets.DEV_VM_USERNAME }}
+          key: ${{ secrets.DEV_VM_PRIVATE_KEY }}
+          port: ${{ secrets.DEV_VM_PORT }}
+          script: |
+            cd app/snippet-infra
+            sudo git checkout dev
+            sudo git pull
+            sudo docker-compose down
+            sudo docker-compose pull
+            sudo docker-compose up -d
