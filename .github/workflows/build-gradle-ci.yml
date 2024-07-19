@@ -1,0 +1,14 @@
+name: Build Gradle CI workflow
+
+on:
+  pull_request:
+    branches:
+      - main
+      - dev
+
+jobs:
+  build:
+    uses: PrintScript-IngSis/snippet-actions/.github/workflows/build-gradle-ci.yml@main
+    with:
+      USERNAME: ${{ secrets.PUBLISH_USER }}
+      TOKEN: ${{ secrets.PUBLISH_TOKEN }}
