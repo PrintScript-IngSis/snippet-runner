@@ -43,6 +43,7 @@ dependencies {
     implementation("org.postgresql:postgresql:42.7.2")
     implementation("org.springframework.boot:spring-boot-starter-validation:3.3.0")
     implementation("org.jetbrains.kotlinx:kover-gradle-plugin:0.7.6")
+    implementation("org.springframework.boot:spring-boot-starter-data-redis-reactive:+")
 }
 
 tasks.withType<KotlinCompile> {

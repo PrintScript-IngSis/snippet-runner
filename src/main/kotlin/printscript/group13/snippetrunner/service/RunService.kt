@@ -7,6 +7,7 @@ import org.example.formatter.FormatterImpl
 import org.example.interpreter.InterpreterImpl
 import org.example.parser.ParserImpl
 import org.example.token.Token
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import printscript.group13.snippetrunner.input.FormatterInput
 import printscript.group13.snippetrunner.input.InterpreterInput
@@ -19,9 +20,14 @@ import java.io.PrintStream
 
 @Service
 class RunService {
+
+    private val logger = LoggerFactory.getLogger(RunService::class.java)
+
     fun interpretCode(input: InterpreterInput): InterpreterOutput {
         try {
-            val lexer = LexerDirector().createLexer(input.version)
+            logger.info("Interpreting code")
+            val lexer = LexerDirector().createLexer("1.1")
+            logger.info("splitting code")
             val lines = input.code.split("\n")
             val output = mutableListOf<String>()
             var index = 0
@@ -32,6 +38,7 @@ class RunService {
                     index = lines.indexOf(line)
                 }
                 val tokens: List<Token> = lexer.tokenize(line)
+                logger.info("code tokenized")
                 val ast: ProgramNode = ParserImpl().parse(tokens)
                 val baos = ByteArrayOutputStream()
                 if (input.input.isNotEmpty()) {
@@ -41,6 +48,7 @@ class RunService {
                 }
                 index++
             }
+            logger.info("Code interpreted")
             return InterpreterOutput(output, "Interpreted correctly")
         } catch (e: Throwable) {
             return InterpreterOutput(mutableListOf(), e.message ?: "An error occurred")
